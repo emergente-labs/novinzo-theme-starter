@@ -1,0 +1,30 @@
+name: Deploy theme
+
+# Deploys the theme to your Novinzo store on every push to main. Set two repository
+# variables first (Settings → Secrets and variables → Actions → Variables):
+#   NOVINZO_STORE    your store's subdomain
+#   NOVINZO_API_URL  the API address
+# Settings → Theme in the Novinzo dashboard shows both, and is where you link this
+# repository. No secret is needed: the deploy proves it runs for this repository with
+# GitHub's OIDC token.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: novinzo-theme
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: emergente-labs/novinzo-theme-deploy@v1
+        with:
+          store: ${{ vars.NOVINZO_STORE }}
+          api-url: ${{ vars.NOVINZO_API_URL }}

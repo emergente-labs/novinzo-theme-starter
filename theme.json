@@ -1,0 +1,9 @@
+{
+  "name": "Starter Theme",
+  "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
+  "author": "Novinzo",
+  "tags": ["minimal", "starter", "clean"],
+  "version": "1.0.0",
+  "changelog": "Initial release of the Starter Theme",
+  "status": "published"
+}

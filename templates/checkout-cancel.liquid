@@ -1,0 +1,25 @@
+{%- comment -%}
+  Checkout-cancel page. No `order` here — cancellation happens before an
+  order exists.
+{%- endcomment -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout cancelled — {{ store.name }}</title>
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+</head>
+<body>
+  <header>
+    <a href="/">{{ store.name }}</a>
+  </header>
+
+  <main>
+    <h1>Checkout cancelled</h1>
+    <p>No charges were made.</p>
+    <a href="/checkout">Try again</a>
+    <a href="/">Back to {{ store.name }}</a>
+  </main>
+</body>
+</html>

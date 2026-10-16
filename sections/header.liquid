@@ -1,0 +1,38 @@
+<header class="flex items-center justify-between relative z-10 pt-5 lg:pt-0">
+  <a href="/" class="flex items-center gap-2.5">
+    {% if store.logoImageUrl %}
+      {%- comment -%}
+        Decorative: the link already carries the store name as text below, so naming the
+        logo here too made a screen reader announce the store twice. The placeholder
+        branch has no accessible name, so an empty alt keeps the two consistent.
+      {%- endcomment -%}
+      <img
+        src="{{ store.logoImageUrl | image_url: width: 64 }}"
+        alt=""
+        width="26"
+        height="26"
+        class="block size-6.5 shrink-0 rounded-full object-cover"
+      >
+    {% else %}
+      {% render 'logo-placeholder', logo_size: 'size-6.5' %}
+    {% endif %}
+    <span class="font-medium text-white">{{ store.name }}</span>
+  </a>
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      data-cart-open
+      aria-label="Cart"
+      class="flex items-center justify-center size-9 rounded-xl bg-black/7.5 text-white/70 transition-colors cursor-pointer hover:bg-white/10 hover:text-white"
+    >
+      <img src="{{ 'cart.svg' | asset_url }}" alt="" width="16" height="16">
+    </button>
+    <a
+      href="/login"
+      aria-label="Account"
+      class="flex items-center justify-center size-9 rounded-xl bg-black/7.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+    >
+      <img src="{{ 'user.svg' | asset_url }}" alt="" width="16" height="16">
+    </a>
+  </div>
+</header>

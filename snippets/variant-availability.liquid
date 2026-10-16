@@ -1,0 +1,11 @@
+{%- comment -%}
+  Stock notes under a variant, rendered inside its chip. The page is cached, so
+  all notes start hidden; the storefront sets the chip's `data-availability` to
+  `in_stock`, `low_stock` or `sold_out` from live stock, or to `unconfirmed` when
+  it could not check, and the matching note shows (the `sold-out:`, `low-stock:`
+  and `stock-unconfirmed:` variants live in assets/input.css). An in-stock variant
+  gets no note.
+{%- endcomment -%}
+<span class="hidden sold-out:block text-xs text-red-400 mt-0.5">Sold out</span>
+<span class="hidden low-stock:block text-xs text-amber-300 mt-0.5">Only a few left</span>
+<span class="hidden stock-unconfirmed:block text-xs text-amber-300 mt-0.5">Couldn't check stock. Reload to try again.</span>

@@ -1,0 +1,15 @@
+{%- comment -%}
+  Error page for 5xx and anything else that cannot render its own page. The card lives in
+  the <error-page> component, not here, so every store shows the same failure page.
+{%- endcomment -%}
+{% layout 'novinzo' %}
+
+<error-page
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  error-title="{{ error.title }}"
+  message="{{ error.message }}"
+  error-code="{{ error.code }}"
+  data-island="error-page"
+  data-hydrate="eager"
+></error-page>

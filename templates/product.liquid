@@ -1,0 +1,125 @@
+{% layout 'default' %}
+
+<div class="flex flex-col gap-10 lg:gap-16">
+  <!-- Product title -->
+  <section>
+    <h1 class="text-base lg:text-xl font-semibold">
+      {{ product.name }}
+      <span class="opacity-50" aria-hidden="true">&#x2198;</span>
+    </h1>
+  </section>
+
+  <!-- Image + details -->
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <!--
+      Image gallery: scroll-snap strip + arrow nav, driven by the
+      <sh-image-carousel> Lit component. Images are passed as a JSON
+      attribute; output escaping turns the quotes into HTML entities so the JSON
+      survives inside the double-quoted attribute, and the component decodes
+      and renders it.
+      The frame and first image are rendered here too, with the component's
+      classes, so the image is fetched before any script runs and the box has
+      its final size. The component reuses that `<img>` as slide one when it
+      upgrades.
+    -->
+    {% if product.images.size > 0 %}
+      {% assign first_image = product.images.first %}
+      {% assign first_image_alt = first_image.altText | default: product.name %}
+      <sh-image-carousel images="{{ product.images | json }}" fallback-alt="{{ product.name }}">
+        <div class="relative p-3 rounded-3xl shadow-[0_10px_15px_-3px_rgb(0_0_0/0.1),0_4px_6px_-4px_rgb(0_0_0/0.1)] bg-[rgb(22_22_22/0.7)]">
+          <div class="flex snap-x snap-mandatory overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {{ first_image.url | image_tag: alt: first_image_alt, class: 'snap-center shrink-0 w-full aspect-[4/3] object-cover rounded-2xl', widths: '600, 900, 1200, 1800', sizes: '(min-width: 1024px) 50vw, 100vw', width: 1200, height: 900 }}
+          </div>
+        </div>
+      </sh-image-carousel>
+    {% else %}
+      <div class="rounded-3xl shadow-lg overflow-hidden aspect-4/3">
+        {% render 'product-placeholder' %}
+      </div>
+    {% endif %}
+
+    <!-- Info card -->
+    <div
+      class="rounded-3xl shadow-lg bg-[#161616]/70 p-6 lg:p-8 flex flex-col gap-12"
+      data-product-actions
+      data-product-id="{{ product.id }}"
+      data-product-name="{{ product.name }}"
+      data-currency="{{ store.currencyIsoCode }}"
+      data-image-url="{{ product.images.first.url }}"
+    >
+      <div>
+        <h2 class="text-base lg:text-2xl font-semibold">{{ product.name }}</h2>
+        {% if product.lowestVariantPrice %}
+          <p class="text-xs lg:text-sm text-white/50 mt-1">
+            Starting from
+            <span class="text-price text-base lg:text-lg font-semibold font-mono">
+              {{- product.lowestVariantPrice | money -}}
+            </span>
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Variants -->
+      {% if product.variants.size > 0 %}
+        <fieldset>
+          <legend class="mb-3 text-sm font-medium text-white">Variants <span class="opacity-50" aria-hidden="true">&#x2198;</span></legend>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {%- comment -%}
+              A native radio group: Tab reaches the checked variant, the arrow
+              keys move the choice, and screen readers announce each label's
+              name, price, stock note and checked state. The chip's ring follows
+              its checked radio, so selecting needs no script.
+              No stock state here: this page is served from the page cache. The
+              cart drawer sets each chip's `data-availability` from live stock,
+              which reveals the matching 'variant-availability' note.
+            {%- endcomment -%}
+            {% for variant in product.variants %}
+              <label
+                class="block cursor-pointer rounded-2xl ring-3 px-5 py-3 transition-all duration-200 ring-white/0 bg-black/20 hover:ring-white/50 has-checked:ring-blue-500 has-checked:bg-transparent has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white"
+                data-variant-id="{{ variant.id }}"
+                data-variant-name="{{ variant.name }}"
+                data-price-minor-units="{{ variant.unitPrice | money_minor_units }}"
+              >
+                <input type="radio" class="sr-only" name="variant-{{ product.id }}" value="{{ variant.id }}" {% if forloop.first %}checked{% endif %}>
+                <span class="block text-sm font-medium text-white/90">{{ variant.name }}</span>
+                <span class="block text-xs text-price font-mono mt-0.5">{{ variant.unitPrice | money }}</span>
+                {% render 'variant-availability' %}
+              </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+      {% endif %}
+
+      <!-- Actions -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <button
+          type="button"
+          data-buy-now
+          class="flex items-center cursor-pointer justify-between gap-2 rounded-2xl text-sm bg-white text-black font-medium py-3 px-5 transition-opacity enabled:hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Buy Now
+          <img src="{{ 'card.svg' | asset_url }}" alt="" width="18" height="18">
+        </button>
+        <button
+          type="button"
+          data-add-to-cart
+          class="flex items-center cursor-pointer justify-between gap-2 rounded-2xl text-sm bg-black/30 text-white font-medium py-3 px-5 transition-colors enabled:hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Add to Cart
+          <img src="{{ 'cart.svg' | asset_url }}" alt="" width="18" height="18">
+        </button>
+      </div>
+
+      <!-- Description -->
+      {% if product.description %}
+        <div class="flex flex-col gap-2">
+          <p class="text-sm font-medium text-white">Description <span class="opacity-50">&#x2198;</span></p>
+          <div class="markdown-content text-sm text-white/40 leading-relaxed">{{ product.description | markdown }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Published reviews, when the store has the reviews plugin: average rating, breakdown and the newest reviews. -->
+  {% plugin_block "reviews/product-reviews@1", product_id: product.id %}
+</div>

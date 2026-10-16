@@ -1,0 +1,66 @@
+<footer class="flex flex-col gap-10 pb-10">
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl lg:text-3xl leading-tight">
+      If you didn't find the products<br>
+      you are interested in or have questions?
+    </h2>
+    <p class="text-sm lg:text-base text-white/45">Just send us an email and we will revert back.</p>
+  </div>
+  <div class="flex flex-col gap-7 sm:flex-row sm:items-start sm:justify-between sm:gap-10 bg-[#111111]/50 rounded-3xl p-6 lg:p-8">
+    <a href="/" class="flex items-center gap-3">
+      {% if store.logoImageUrl %}
+        {%- comment -%} Decorative: the link already carries the store name as text. {%- endcomment -%}
+        <img
+          src="{{ store.logoImageUrl | image_url: width: 64 }}"
+          alt=""
+          width="32"
+          height="32"
+          loading="lazy"
+          class="block size-8 shrink-0 rounded-full object-cover"
+        >
+      {% else %}
+        {% render 'logo-placeholder', logo_size: 'size-8' %}
+      {% endif %}
+      <div class="flex flex-col">
+        <span class="text-sm lg:text-base font-medium">{{ store.name }}</span>
+        <div class="text-xs text-white/50 flex items-center gap-1">
+          Powered by <img src="{{ 'novinzo.svg' | asset_url }}" alt="Novinzo" width="12" height="12">
+        </div>
+      </div>
+    </a>
+    <div class="flex flex-wrap gap-x-14 gap-y-7 pr-0 lg:pr-20">
+      {% if store.supportEmail %}
+        <div class="flex flex-col gap-2.5">
+          <p class="text-xs font-semibold tracking-[0.08em] text-white/50 mb-4">INFORMATION</p>
+          <a href="mailto:{{ store.supportEmail }}" class="text-xs text-white transition-colors hover:text-white/75">Email Us</a>
+        </div>
+      {% endif %}
+      {%- comment -%}
+        A policy page only exists once the store has written that policy (blank counts as
+        unwritten), so link just the ones it has; the others answer 404.
+      {%- endcomment -%}
+      {% if store.termsOfService != blank or store.refundPolicy != blank or store.privacyPolicy != blank %}
+        <div class="flex flex-col gap-2.5">
+          <p class="text-xs font-semibold tracking-[0.08em] text-white/50 mb-4">MENU</p>
+          {% if store.termsOfService != blank %}
+            <a href="/terms" class="text-xs text-white transition-colors hover:text-white/75">Terms of Service</a>
+          {% endif %}
+          {% if store.refundPolicy != blank %}
+            <a href="/refund" class="text-xs text-white transition-colors hover:text-white/75">Refund Policy</a>
+          {% endif %}
+          {% if store.privacyPolicy != blank %}
+            <a href="/privacy" class="text-xs text-white transition-colors hover:text-white/75">Privacy Policy</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-0 text-xs text-white">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ store.name }} &middot; Storefront by Novinzo</span>
+    <span>
+      <a href="#" class="transition-colors hover:text-white/75">Report Abuse</a>
+      &nbsp;|&nbsp;
+      <a href="#" class="transition-colors hover:text-white/75">Anti-Fraud Policies &rarr; Novinzo</a>
+    </span>
+  </div>
+</footer>

@@ -1,0 +1,12 @@
+{% layout 'novinzo' %}
+
+<sh-order-detail
+  order-id="{{ order.orderId }}"
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  data-island="sh-order-detail"
+  data-hydrate="eager"
+></sh-order-detail>
+
+<!-- Review forms for the order's lines, when the store has the reviews plugin; nothing until the order is paid. -->
+{% plugin_block "reviews/order-reviews@1", order_id: order.orderId %}

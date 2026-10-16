@@ -1,0 +1,8 @@
+{% layout 'novinzo' %}
+
+<sh-login-form
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  data-island="sh-login-form"
+  data-hydrate="eager"
+></sh-login-form>

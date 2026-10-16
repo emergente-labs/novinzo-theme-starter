@@ -1,0 +1,32 @@
+{%- comment -%}
+  Store policy page, shared by Terms of Service, Privacy Policy and Refund Policy.
+  `policy.title` names which one; `policy.body` is the store's own text.
+
+  The body is Markdown written in the dashboard's policy editor. `markdown` renders it to
+  sanitized HTML, so store-authored text can never inject markup or scripts.
+{%- endcomment -%}
+{% layout 'novinzo' %}
+
+<div class="mx-auto flex w-full max-w-2xl flex-1 flex-col py-10">
+  <a href="/" class="flex items-center gap-2.5 pb-8">
+    {% if store.logoImageUrl %}
+      <img
+        src="{{ store.logoImageUrl | image_url: width: 64 }}"
+        alt=""
+        width="26"
+        height="26"
+        class="block size-6.5 shrink-0 rounded-full object-cover"
+      >
+    {% else %}
+      <span class="block size-6.5 shrink-0 rounded-full bg-linear-to-br from-orange-500 via-red-500 to-red-600"></span>
+    {% endif %}
+    <span class="font-medium text-black">{{ store.name }}</span>
+  </a>
+
+  <main class="rounded-3xl bg-white p-8 shadow-sm">
+    <h1 class="text-xl font-semibold text-black">{{ policy.title }}</h1>
+    <div class="markdown-content mt-5 text-sm leading-relaxed text-black/70">
+      {{- policy.body | markdown -}}
+    </div>
+  </main>
+</div>
