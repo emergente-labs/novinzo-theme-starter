@@ -21,6 +21,8 @@ concurrency:
 
 jobs:
   deploy:
+    # The template itself deploys nowhere; repositories made from it do.
+    if: github.repository != 'emergente-labs/novinzo-theme-starter'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
