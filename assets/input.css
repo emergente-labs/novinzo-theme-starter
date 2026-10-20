@@ -3,8 +3,8 @@
 @source "../**/*.liquid";
 
 /*
- * Self-hosted latin and latin-ext subsets (SIL Open Font License 1.1), as
- * served by Google Fonts. The theme uses upright weights 400-700 only; Inter
+ * Self-hosted latin and latin-ext subsets (SIL Open Font License 1.1: OFL.txt),
+ * as served by Google Fonts. The theme uses upright weights 400-700 only; Inter
  * keeps its full wght + opsz variable axes so large headings keep their display
  * optical size. Browsers download a face only when the page uses a character in
  * its unicode-range, so latin-ext costs nothing on latin-only pages and is not

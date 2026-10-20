@@ -2,6 +2,7 @@
   "name": "novinzo-theme",
   "private": true,
   "description": "A Novinzo storefront theme, deployed by GitHub Actions on every push.",
+  "license": "MIT",
   "scripts": {
     "build": "tailwindcss -i assets/input.css -o assets/theme.css --minify",
     "watch": "tailwindcss -i assets/input.css -o assets/theme.css --watch"
