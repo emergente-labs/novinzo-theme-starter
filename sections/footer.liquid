@@ -1,11 +1,15 @@
 <footer class="flex flex-col gap-10 pb-10">
-  <div class="flex flex-col gap-4">
-    <h2 class="text-xl lg:text-3xl leading-tight">
-      If you didn't find the products<br>
-      you are interested in or have questions?
-    </h2>
-    <p class="text-sm lg:text-base text-white/45">Just send us an email and we will revert back.</p>
-  </div>
+  {% if store.supportEmail %}
+    <div class="flex flex-col gap-4">
+      <h2 class="text-xl lg:text-3xl leading-tight text-balance">
+        Didn't find what you were looking for, or have a question?
+      </h2>
+      <p class="text-sm lg:text-base text-white/45">
+        <a href="mailto:{{ store.supportEmail }}" class="underline underline-offset-2 transition-colors hover:text-white/75">Email us</a>
+        and we'll get back to you.
+      </p>
+    </div>
+  {% endif %}
   <div class="flex flex-col gap-7 sm:flex-row sm:items-start sm:justify-between sm:gap-10 bg-[#111111]/50 rounded-3xl p-6 lg:p-8">
     <a href="/" class="flex items-center gap-3">
       {% if store.logoImageUrl %}
@@ -55,12 +59,5 @@
       {% endif %}
     </div>
   </div>
-  <div class="flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-0 text-xs text-white">
-    <span>&copy; {{ 'now' | date: '%Y' }} {{ store.name }} &middot; Storefront by Novinzo</span>
-    <span>
-      <a href="#" class="transition-colors hover:text-white/75">Report Abuse</a>
-      &nbsp;|&nbsp;
-      <a href="#" class="transition-colors hover:text-white/75">Anti-Fraud Policies &rarr; Novinzo</a>
-    </span>
-  </div>
+  <p class="text-center lg:text-start text-xs text-white">&copy; {{ 'now' | date: '%Y' }} {{ store.name }}</p>
 </footer>
