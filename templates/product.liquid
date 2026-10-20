@@ -1,7 +1,6 @@
 {% layout 'default' %}
 
 <div class="flex flex-col gap-10 lg:gap-16">
-  <!-- Product title -->
   <section>
     <h1 class="text-base lg:text-xl font-semibold">
       {{ product.name }}
@@ -9,9 +8,8 @@
     </h1>
   </section>
 
-  <!-- Image + details -->
   <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-    <!--
+    {%- comment -%}
       Image gallery: scroll-snap strip + arrow nav, driven by the
       <sh-image-carousel> Lit component. Images are passed as a JSON
       attribute; output escaping turns the quotes into HTML entities so the JSON
@@ -21,7 +19,7 @@
       classes, so the image is fetched before any script runs and the box has
       its final size. The component reuses that `<img>` as slide one when it
       upgrades.
-    -->
+    {%- endcomment %}
     {% if product.images.size > 0 %}
       {% assign first_image = product.images.first %}
       {% assign first_image_alt = first_image.altText | default: product.name %}
@@ -38,7 +36,6 @@
       </div>
     {% endif %}
 
-    <!-- Info card -->
     <div
       class="rounded-3xl shadow-lg bg-[#161616]/70 p-6 lg:p-8 flex flex-col gap-12"
       data-product-actions
@@ -48,7 +45,8 @@
       data-image-url="{{ product.images.first.url }}"
     >
       <div>
-        <h2 class="text-base lg:text-2xl font-semibold">{{ product.name }}</h2>
+        {%- comment -%} The page's h1 already names the product; this repeats it beside the price. {%- endcomment %}
+        <p class="text-base lg:text-2xl font-semibold">{{ product.name }}</p>
         {% if product.lowestVariantPrice %}
           <p class="text-xs lg:text-sm text-white/50 mt-1">
             Starting from
@@ -59,7 +57,6 @@
         {% endif %}
       </div>
 
-      <!-- Variants -->
       {% if product.variants.size > 0 %}
         <fieldset>
           <legend class="mb-3 text-sm font-medium text-white">Variants <span class="opacity-50" aria-hidden="true">&#x2198;</span></legend>
@@ -90,7 +87,6 @@
         </fieldset>
       {% endif %}
 
-      <!-- Actions -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <button
           type="button"
@@ -110,16 +106,15 @@
         </button>
       </div>
 
-      <!-- Description -->
       {% if product.description %}
         <div class="flex flex-col gap-2">
-          <p class="text-sm font-medium text-white">Description <span class="opacity-50">&#x2198;</span></p>
+          <p class="text-sm font-medium text-white">Description <span class="opacity-50" aria-hidden="true">&#x2198;</span></p>
           <div class="markdown-content text-sm text-white/40 leading-relaxed">{{ product.description | markdown }}</div>
         </div>
       {% endif %}
     </div>
   </section>
 
-  <!-- Published reviews, when the store has the reviews plugin: average rating, breakdown and the newest reviews. -->
+  {%- comment -%} Published reviews, when the store has the reviews plugin: average rating, breakdown and the newest reviews. {%- endcomment %}
   {% plugin_block "reviews/product-reviews@1", product_id: product.id %}
 </div>

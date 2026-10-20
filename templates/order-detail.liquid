@@ -8,5 +8,5 @@
   data-hydrate="eager"
 ></sh-order-detail>
 
-<!-- Review forms for the order's lines, when the store has the reviews plugin; nothing until the order is paid. -->
+{%- comment -%} Review forms for the order's lines, when the store has the reviews plugin; nothing until the order is paid. {%- endcomment %}
 {% plugin_block "reviews/order-reviews@1", order_id: order.orderId %}

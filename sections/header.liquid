@@ -1,11 +1,7 @@
 <header class="flex items-center justify-between relative z-10 pt-5 lg:pt-0">
   <a href="/" class="flex items-center gap-2.5">
     {% if store.logoImageUrl %}
-      {%- comment -%}
-        Decorative: the link already carries the store name as text below, so naming the
-        logo here too made a screen reader announce the store twice. The placeholder
-        branch has no accessible name, so an empty alt keeps the two consistent.
-      {%- endcomment -%}
+      {%- comment -%} Decorative: the link already carries the store name as text. {%- endcomment -%}
       <img
         src="{{ store.logoImageUrl | image_url: width: 64 }}"
         alt=""

@@ -18,15 +18,15 @@
         class="block size-6.5 shrink-0 rounded-full object-cover"
       >
     {% else %}
-      <span class="block size-6.5 shrink-0 rounded-full bg-linear-to-br from-orange-500 via-red-500 to-red-600"></span>
+      {% render 'logo-placeholder', logo_size: 'size-6.5' %}
     {% endif %}
     <span class="font-medium text-black">{{ store.name }}</span>
   </a>
 
-  <main class="rounded-3xl bg-white p-8 shadow-sm">
+  <article class="rounded-3xl bg-white p-8 shadow-sm">
     <h1 class="text-xl font-semibold text-black">{{ policy.title }}</h1>
     <div class="markdown-content mt-5 text-sm leading-relaxed text-black/70">
       {{- policy.body | markdown -}}
     </div>
-  </main>
+  </article>
 </div>

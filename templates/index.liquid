@@ -16,18 +16,17 @@
     </h1>
     <p class="text-sm lg:text-base text-white/45 mb-7">Browse our full catalog.</p>
     {% if store.customerCount > 50 %}
-      <div class="px-2.5 py-1.5 cursor-pointer flex items-center gap-1.5 text-sm rounded-xl bg-black/7.5 text-white/70 transition-colors w-fit hover:bg-white/10 hover:text-white">
-        <img src="{{ 'check.svg' | asset_url }}" alt="badge" height="16" width="16">
+      <div class="px-2.5 py-1.5 flex items-center gap-1.5 text-sm rounded-xl bg-black/7.5 text-white/70 w-fit">
+        <img src="{{ 'check.svg' | asset_url }}" alt="" height="16" width="16">
         Trusted by {{ store.customerCount }}+ Customers
       </div>
     {% endif %}
   </div>
 </section>
 
-<!-- All products -->
 <section class="flex flex-col gap-16">
   <div class="flex flex-col gap-5 min-[580px]:flex-row min-[580px]:items-center min-[580px]:justify-between">
-    <h2 class="text-base lg:text-xl font-semibold">All Products <span class="opacity-50">&#x2198;</span></h2>
+    <h2 class="text-base lg:text-xl font-semibold">All Products <span class="opacity-50" aria-hidden="true">&#x2198;</span></h2>
     {%- comment -%}
       A native select is as wide as its longest option, so one long category name would push
       the form, and the page with it, past a phone's width. The form stops at its container,
