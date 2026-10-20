@@ -58,8 +58,16 @@
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Design tokens — `--color-price` generates `text-price`/`bg-price` utilities. */
+/*
+ * Design tokens: each `--color-*` generates its utilities (`--color-card` gives `bg-card`,
+ * `bg-card/70`, …), so the palette changes here, darkest to lightest.
+ */
 @theme {
+  --color-surface: #090909; /* the page surface the content scrolls on */
+  --color-canvas: #101010; /* the frame around that surface, and the "Powered by" notch */
+  --color-panel: #111111; /* the footer's store panel */
+  --color-card: #161616; /* product cards, the product info card and the category filter */
+  --color-well: #1f1f1f; /* behind product images */
   --color-price: #d4f264;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -67,7 +75,7 @@
 
 @layer base {
   html {
-    background-color: #0b0b0b;
+    background-color: var(--color-canvas);
     color: #fff;
     font-family: var(--font-sans);
   }
@@ -105,7 +113,7 @@
 .notch {
   --notch-concave: 1rem; /* ← single source of truth for concave roundness */
   position: relative;
-  background: #101010;
+  background: var(--color-canvas);
   border-end-start-radius: 1.25rem;
   border-end-end-radius: 1.25rem;
 }
@@ -116,7 +124,7 @@
   top: 0;
   width: var(--notch-concave);
   height: var(--notch-concave);
-  background: #101010;
+  background: var(--color-canvas);
 }
 .notch::before {
   left: calc(-1 * var(--notch-concave));

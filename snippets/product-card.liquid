@@ -8,7 +8,7 @@
 {%- endcomment -%}
 <a
   href="/products/{{ product.urlSlug }}"
-  class="flex shadow-lg flex-col h-full cursor-pointer bg-[#161616]/70 rounded-3xl overflow-hidden transition duration-200 hover:-translate-y-0.5"
+  class="flex shadow-lg flex-col h-full cursor-pointer bg-card/70 rounded-3xl overflow-hidden transition duration-200 hover:-translate-y-0.5"
 >
   <div class="flex items-start justify-between gap-3 px-5 pt-5 pb-4">
     <div class="flex-1 min-w-0">
@@ -27,7 +27,7 @@
       {% endif %}
     </div>
   </div>
-  <div class="mx-3 mb-3 rounded-2xl overflow-hidden shadow-lg bg-[#1f1f1f] aspect-[4/3] shrink-0">
+  <div class="mx-3 mb-3 rounded-2xl overflow-hidden shadow-lg bg-well aspect-[4/3] shrink-0">
     {% if product.firstImageUrl %}
       {{ product.firstImageUrl | image_tag: alt: product.name, class: 'size-full object-cover', widths: '320, 480, 600, 900, 1200', sizes: '(min-width: 1536px) 410px, (min-width: 900px) 30vw, (min-width: 580px) 45vw, 100vw', lazy: hidden }}
     {% else %}
