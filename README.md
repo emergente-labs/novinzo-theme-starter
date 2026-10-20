@@ -39,3 +39,8 @@ This theme started from `emergente-labs/novinzo-theme-starter`. To take in later
 improvements, add it as a remote and merge its tagged releases. Novinzo announces
 breaking changes to the variables templates can read ahead of time, and flags themes that
 use them on the dashboard's Theme page.
+
+## License
+
+The theme is [MIT licensed](LICENSE). The Inter and JetBrains Mono fonts in `assets/` are
+under the [SIL Open Font License](OFL.txt).
