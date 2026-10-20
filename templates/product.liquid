@@ -91,6 +91,9 @@
         </fieldset>
       {% endif %}
 
+      <!-- Ticket releases: renders nothing unless the ticketing plugin sells these variants -->
+      {% plugin_block "ticketing/ticket-releases@1", product_id: product.id %}
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <button
           type="button"
