@@ -24,6 +24,9 @@
   </div>
 </section>
 
+<!-- Upcoming events: renders nothing unless the ticketing plugin has events on this store -->
+{% plugin_block "ticketing/events-list@1", heading: "Upcoming events", class: "mb-16 lg:mb-24" %}
+
 <section class="flex flex-col gap-16">
   <div class="flex flex-col gap-5 min-[580px]:flex-row min-[580px]:items-center min-[580px]:justify-between">
     <h2 class="text-base lg:text-xl font-semibold">All Products <span class="opacity-50" aria-hidden="true">&#x2198;</span></h2>
