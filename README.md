@@ -10,8 +10,11 @@ store through GitHub Actions.
 2. In this repository, add two variables under **Settings → Secrets and variables →
    Actions → Variables**: `NOVINZO_STORE` and `NOVINZO_API_URL`. The dashboard's Theme page
    shows their values.
-3. Push to `main`. The **Deploy theme** workflow builds the theme, checks it and deploys
-   it. Problems show as annotations on the lines they are about.
+3. Push to `main`. The first run deploys nothing yet: approve it on the dashboard's
+   Theme page, which shows the repository, who started the run and its commit, so a
+   repository that only shares this one's name cannot deploy to your store.
+4. Re-run the workflow. From now on every push builds the theme, checks it and deploys it.
+   Problems show as annotations on the lines they are about.
 
 ## Work on the theme
 
