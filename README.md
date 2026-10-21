@@ -8,10 +8,10 @@ with Tailwind CSS, deployed to your store by GitHub Actions on every push to `ma
 1. Click **Use this template → Create a new repository** to make your own copy.
 2. In the Novinzo dashboard, open **Settings → Theme** and link the new repository and its
    `main` branch.
-3. In the repository, add two variables under **Settings → Secrets and variables →
-   Actions → Variables**: `NOVINZO_STORE` and `NOVINZO_API_URL`. The dashboard's Theme page
-   shows their values. No secret is needed: the deploy proves which repository it runs for
-   with GitHub's OIDC token.
+3. In the repository, add the variable `NOVINZO_STORE` under **Settings → Secrets and
+   variables → Actions → Variables**, set to your store's subdomain as the dashboard's Theme
+   page shows it. No secret is needed: the deploy proves which repository it runs for with
+   GitHub's OIDC token.
 4. Push to `main`. The first run deploys nothing yet: approve it on the dashboard's
    Theme page, which shows the repository, who started the run and its commit, so a
    repository that only shares this one's name cannot deploy to your store.
