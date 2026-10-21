@@ -1,0 +1,15 @@
+{%- comment -%}
+  Not-found page. Shares the <error-page> component with the error page, so a missing page
+  and a failing one look like the same store.
+{%- endcomment -%}
+{% layout 'novinzo' %}
+
+<error-page
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  error-title="Page not found"
+  message="{{ store.name }} has no page at this address."
+  error-code="Error 404"
+  data-island="error-page"
+  data-hydrate="eager"
+></error-page>

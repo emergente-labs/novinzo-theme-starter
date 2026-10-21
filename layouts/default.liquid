@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- comment -%}
+      The seller's SEO fields from the dashboard: the store's on every page, a product's own
+      on its page. An empty one falls back to the product or store name.
+    {%- endcomment -%}
+    {%- assign page_title = store.seoTitle | default: store.name -%}
+    {%- assign page_description = store.seoDescription | default: store.name -%}
+    {%- if product -%}
+      {%- assign page_title = product.seo.title | default: product.name -%}
+      {%- assign page_description = product.seo.description | default: page_description -%}
+    {%- endif %}
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <meta property="og:site_name" content="{{ store.name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:type" content="{% if product %}product{% else %}website{% endif %}">
+    {%- if product.images.size > 0 %}
+    <meta property="og:image" content="{{ product.images.first.url }}">
+    {%- endif %}
+    {%- comment -%}
+      The `.page-bg` aurora (bg.webp) is the LCP element, but only theme.css references it, so
+      the browser would find it after the stylesheet loads. Preload it and Inter with the same
+      URLs theme.css uses so each is fetched once.
+    {%- endcomment -%}
+    <link rel="preload" href="{{ 'bg.webp' | asset_url }}" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="{{ 'inter-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    {{ content_for_head }}
+  </head>
+  <body class="h-screen overflow-hidden antialiased p-2 bg-canvas">
+    <div class="page-bg bg-surface rounded-2xl h-full overflow-y-auto overscroll-none">
+      <div class="flex justify-center sticky top-0 z-20">
+        <span class="notch inline-flex items-center gap-1.5 px-5 pb-2 pt-1 text-sm text-white/50">
+          Powered by
+          <img src="{{ 'novinzo.svg' | asset_url }}" alt="Novinzo" width="16" height="16">
+        </span>
+      </div>
+      <div class="container px-5 lg:px-8 flex flex-col gap-20 lg:gap-40 mx-auto">
+        {% section 'header' %}
+        <main id="main-content" class="flex flex-col gap-20" role="main">
+          {{ content_for_layout }}
+        </main>
+        {% section 'footer' %}
+      </div>
+    </div>
+    <nz-cart-drawer store-id="{{ store.id }}"></nz-cart-drawer>
+    {{ content_for_scripts }}
+  </body>
+</html>

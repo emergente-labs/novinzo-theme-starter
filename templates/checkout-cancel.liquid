@@ -1,0 +1,20 @@
+{%- comment -%}
+  Checkout-cancel page, where a buyer lands after backing out of paying. There is no
+  `order`: cancellation happens before one exists. It shares <error-page> with the error and
+  404 pages; the `failed` tone shows it without red, with "Try again" and a way back to the
+  store. No `support-email`: it would replace the way back with "Contact seller", and a buyer
+  who cancelled on purpose has nothing to report.
+{%- endcomment -%}
+{% layout 'novinzo' %}
+
+<error-page
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  error-title="Checkout cancelled"
+  message="No charges were made."
+  tone="failed"
+  action-label="Try again"
+  action-href="/checkout"
+  data-island="error-page"
+  data-hydrate="eager"
+></error-page>

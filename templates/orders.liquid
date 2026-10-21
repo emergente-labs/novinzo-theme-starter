@@ -1,0 +1,8 @@
+{% layout 'novinzo' %}
+
+<nz-orders-list
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  data-island="nz-orders-list"
+  data-hydrate="eager"
+></nz-orders-list>

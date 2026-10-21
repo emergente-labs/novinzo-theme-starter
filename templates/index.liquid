@@ -1,0 +1,105 @@
+{% layout 'default' %}
+
+{% plugin "categories.all" as categories %}
+{% assign selected_category_slug = categoryFilter.slug %}
+{% assign selected_category = null %}
+{% if selected_category_slug and categories %}
+  {% assign selected_category = categories | where: 'slug', selected_category_slug | first %}
+{% endif %}
+
+<section class="mb-0 lg:mb-10">
+  <div class="relative max-w-3xl">
+    <h1 class="text-3xl lg:text-6xl font-bold leading-tight mb-5">
+      {%- comment -%} A new store has no headline yet: greet buyers with its name, never a bare "Welcome to". {%- endcomment -%}
+      {%- assign default_headline = 'Welcome to ' | append: store.name -%}
+      <span class="block text-white font-normal">{{ store.headline | default: default_headline }}</span>
+    </h1>
+    <p class="text-sm lg:text-base text-white/45 mb-7">Browse our full catalog.</p>
+    {% if store.customerCount > 50 %}
+      <div class="px-2.5 py-1.5 flex items-center gap-1.5 text-sm rounded-xl bg-black/7.5 text-white/70 w-fit">
+        <img src="{{ 'check.svg' | asset_url }}" alt="" height="16" width="16">
+        Trusted by {{ store.customerCount }}+ Customers
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="flex flex-col gap-16">
+  <div class="flex flex-col gap-5 min-[580px]:flex-row min-[580px]:items-center min-[580px]:justify-between">
+    <h2 class="text-base lg:text-xl font-semibold">All Products <span class="opacity-50" aria-hidden="true">&#x2198;</span></h2>
+    {%- comment -%}
+      A native select is as wide as its longest option, so one long category name would push
+      the form, and the page with it, past a phone's width. The form stops at its container,
+      and the dropdown block shrinks inside it, cutting the shown name with an ellipsis.
+    {%- endcomment %}
+    <form
+      method="get"
+      action="/"
+      class="flex min-h-10 w-fit max-w-full min-w-0 items-center rounded-2xl bg-card px-4 py-2 text-sm focus-within:ring-1 focus-within:ring-white/20 [&_nz-categories-dropdown]:min-w-0 [&_select]:max-w-full [&_select]:text-ellipsis"
+    >
+      <label for="category" class="shrink-0 text-white/35">Category:</label>
+      {% plugin_block "categories/category-dropdown@1", placeholder: "All categories", selected: selected_category_slug %}
+      <noscript><button type="submit" class="ml-2 text-price">Apply</button></noscript>
+    </form>
+  </div>
+
+  {%- comment -%}
+    The catalog could not be read (a backend timeout or outage), so `products` is empty.
+    Say so instead of claiming the store has nothing for sale, laid out like the cart drawer's
+    "couldn't load" state. The empty href reloads the same URL, category filter included.
+  {%- endcomment -%}
+  {% if catalogUnavailable %}
+    <div
+      id="catalog-unavailable"
+      role="alert"
+      class="flex flex-col items-center gap-4 rounded-3xl bg-card/70 px-6 py-12 text-center"
+    >
+      <p class="text-sm font-medium text-white">We couldn't load the products.</p>
+      <a
+        href=""
+        class="flex items-center gap-2 rounded-2xl text-sm bg-black/30 text-white font-medium py-3 px-5 transition-colors hover:bg-white/10"
+      >
+        Reload page
+      </a>
+    </div>
+  {% else %}
+    {% assign visible_product_count = 0 %}
+    <ul
+      id="product-grid"
+      class="grid grid-cols-1 min-[580px]:grid-cols-2 min-[900px]:grid-cols-3 gap-x-32 gap-y-16 list-none"
+    >
+      {% for product in products %}
+        {% assign product_hidden = false %}
+        {% if selected_category %}
+          {% unless selected_category.productIds contains product.id %}
+            {% assign product_hidden = true %}
+          {% endunless %}
+        {% endif %}
+        {% unless product_hidden %}
+          {% assign visible_product_count = visible_product_count | plus: 1 %}
+        {% endunless %}
+        <li
+          data-category-product="{{ product.id }}"
+          {% if product_hidden %}
+            hidden
+          {% endif %}
+        >
+          {% render 'product-card', product: product, hidden: product_hidden %}
+        </li>
+      {% endfor %}
+    </ul>
+    <p
+      id="category-empty"
+      {% if visible_product_count > 0 %}
+        hidden
+      {% endif %}
+      class="rounded-3xl bg-card/70 px-6 py-12 text-center text-sm text-white/50"
+    >
+      No products are available in
+      <span>
+        {%- if selected_category %}{{ selected_category.name }}{% else %}All{% endif -%}
+      </span>
+      yet.
+    </p>
+  {% endif %}
+</section>
