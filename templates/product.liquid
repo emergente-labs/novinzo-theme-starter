@@ -11,7 +11,7 @@
   <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
     {%- comment -%}
       Image gallery: scroll-snap strip + arrow nav, driven by the
-      <sh-image-carousel> Lit component. Images are passed as a JSON
+      <nz-image-carousel> Lit component. Images are passed as a JSON
       attribute; output escaping turns the quotes into HTML entities so the JSON
       survives inside the double-quoted attribute, and the component decodes
       and renders it.
@@ -23,13 +23,13 @@
     {% if product.images.size > 0 %}
       {% assign first_image = product.images.first %}
       {% assign first_image_alt = first_image.altText | default: product.name %}
-      <sh-image-carousel images="{{ product.images | json }}" fallback-alt="{{ product.name }}">
+      <nz-image-carousel images="{{ product.images | json }}" fallback-alt="{{ product.name }}">
         <div class="relative p-3 rounded-3xl shadow-[0_10px_15px_-3px_rgb(0_0_0/0.1),0_4px_6px_-4px_rgb(0_0_0/0.1)] bg-[rgb(22_22_22/0.7)]">
           <div class="flex snap-x snap-mandatory overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {{ first_image.url | image_tag: alt: first_image_alt, class: 'snap-center shrink-0 w-full aspect-[4/3] object-cover rounded-2xl', widths: '600, 900, 1200, 1800', sizes: '(min-width: 1024px) 50vw, 100vw', width: 1200, height: 900 }}
           </div>
         </div>
-      </sh-image-carousel>
+      </nz-image-carousel>
     {% else %}
       <div class="rounded-3xl shadow-lg overflow-hidden aspect-4/3">
         {% render 'product-placeholder' %}

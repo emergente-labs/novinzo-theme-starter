@@ -35,7 +35,7 @@
     <form
       method="get"
       action="/"
-      class="flex min-h-10 w-fit max-w-full min-w-0 items-center rounded-2xl bg-card px-4 py-2 text-sm focus-within:ring-1 focus-within:ring-white/20 [&_sh-categories-dropdown]:min-w-0 [&_select]:max-w-full [&_select]:text-ellipsis"
+      class="flex min-h-10 w-fit max-w-full min-w-0 items-center rounded-2xl bg-card px-4 py-2 text-sm focus-within:ring-1 focus-within:ring-white/20 [&_nz-categories-dropdown]:min-w-0 [&_select]:max-w-full [&_select]:text-ellipsis"
     >
       <label for="category" class="shrink-0 text-white/35">Category:</label>
       {% plugin_block "categories/category-dropdown@1", placeholder: "All categories", selected: selected_category_slug %}
