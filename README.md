@@ -30,9 +30,10 @@ You need Node.js 22 or later. Run `npm install` once.
   `/theme/assets/…`; use the `asset_url` filter to link them.
 - `theme.json` names the theme.
 
-To check the theme without deploying, clone
-[`emergente-labs/novinzo-theme-deploy`](https://github.com/emergente-labs/novinzo-theme-deploy)
-next to this repository and run `npm run check` here. Pull requests run the same check.
+To preview the theme on your store as you edit it, without deploying, run
+`npx @novinzo/theme-cli dev`. `npm run check` has Novinzo check the theme the way a deploy
+does, and changes nothing on your store. Pull requests run the same check, as
+`.github/workflows/check.yml`.
 
 ## Roll back
 
