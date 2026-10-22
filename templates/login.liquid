@@ -1,8 +1,14 @@
 {% layout 'novinzo' %}
 
+{%- comment -%}
+  A policy page exists only once the store has written that policy (blank counts as
+  unwritten), so the sign-in card links just the ones it has; the others answer 404.
+{%- endcomment %}
 <nz-login-form
   store-name="{{ store.name }}"
   store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  {%- if store.privacyPolicy != blank %} privacy-href="/privacy"{% endif %}
+  {%- if store.termsOfService != blank %} terms-href="/terms"{% endif %}
   data-island="nz-login-form"
   data-hydrate="eager"
 ></nz-login-form>
