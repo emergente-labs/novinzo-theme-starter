@@ -1,3 +1,6 @@
 node_modules/
 # Built from assets/input.css by `npm run build`, here and in the deploy.
 assets/theme.css
+# The Liquid of the starter release Novinzo serves, written before each build by the
+# deploy action and the theme CLI.
+.novinzo/

@@ -22,13 +22,12 @@ with Tailwind CSS, deployed to your store by GitHub Actions on every push to `ma
 
 You need Node.js 22 or later. Run `npm install` once.
 
-- `layouts/`, `templates/`, `sections/` and `snippets/` are the theme's Liquid. Every page
-  the storefront renders has a template; the deploy refuses a theme missing one.
+- `layouts/`, `templates/`, `sections/` and `snippets/` are the theme's Liquid.
 - `assets/input.css` is the Tailwind source; `npm run build` compiles it into
   `assets/theme.css`, which the layout loads. `npm run watch` rebuilds as you edit.
 - Other files in `assets/` (images, fonts, scripts) are served from your store at
   `/theme/assets/…`; use the `asset_url` filter to link them.
-- `theme.json` names the theme.
+- `theme.json` names the theme and the starter release it `extends` (see below).
 
 To check the theme without deploying, clone
 [`emergente-labs/novinzo-theme-deploy`](https://github.com/emergente-labs/novinzo-theme-deploy)
@@ -38,11 +37,38 @@ next to this repository and run `npm run check` here. Pull requests run the same
 
 Revert the commit and push. Novinzo keeps only the live version of your theme.
 
+## Keep only what you change
+
+`theme.json` says the theme extends the starter (`"extends": "starter@1.1.0"`). Novinzo
+serves every file the theme does not have from the newest starter release of that major
+version, so delete the starter's files you have not changed: the pages they render then
+follow the starter's fixes and updates without any work on your side. Your own file always
+wins over the starter's file of the same path. Don't give a file the name of one of the
+starter's in another directory (`snippets/header.liquid` beside the starter's
+`sections/header.liquid`): the deploy refuses it, since it would replace the starter's.
+
+Inherited pages use your stylesheet. The deploy writes the starter's Liquid to
+`.novinzo/base/` before building, and `assets/input.css` names it as a Tailwind source, so
+`theme.css` keeps the classes those pages use.
+
 ## Updates to the starter
 
-To take in later improvements, add this repository as a remote and merge its tagged
-releases. Novinzo announces breaking changes to the variables templates can read ahead of
-time, and flags themes that use them on the dashboard's Theme page.
+Once a day, `.github/workflows/starter-updates.yml` asks Novinzo which starter release it
+serves. When that is newer than the one the theme extends, it opens a pull request that takes
+the release into the starter files you kept, the same day the files you don't keep switch to
+it: files you never changed become the release's (or go, when the release drops them), and
+your changes are merged with the release's. Where you and the release changed the same
+lines, the file gets git's conflict markers and the pull request lists it first: resolve
+them before merging, as the deploy refuses a theme that still has them. A newer pull request
+closes an older one it supersedes.
+
+For it to open pull requests, turn on **Settings → Actions → General → Allow GitHub Actions
+to create and approve pull requests**. Close and reopen its pull request to run the check
+on it. GitHub pauses scheduled workflows in a public repository after 60 days without
+activity; re-enable it from the **Actions** tab.
+
+Novinzo announces breaking changes to the variables templates can read ahead of time, and
+flags themes that use them on the dashboard's Theme page.
 
 ## License
 
