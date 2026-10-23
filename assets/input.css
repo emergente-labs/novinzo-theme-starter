@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @source "../**/*.liquid";
+/*
+ * The starter's own Liquid, for the pages this theme inherits from it (theme.json's
+ * extends): they render with this stylesheet too. The deploy action and the theme CLI
+ * write it here before building; a plain `npm run build` finds none.
+ */
+@source "../.novinzo/base";
 
 /*
  * Self-hosted latin and latin-ext subsets (SIL Open Font License 1.1: OFL.txt),
