@@ -54,15 +54,17 @@ Inherited pages use your stylesheet. The deploy writes the starter's Liquid to
 
 ## Updates to the starter
 
-Every Monday, `.github/workflows/starter-updates.yml` looks for a newer starter release of
-the major version the theme extends. If there is one, it opens a pull request that takes the
-release into the starter files you kept: files you never changed become the release's, and
+Once a day, `.github/workflows/starter-updates.yml` asks Novinzo which starter release it
+serves. When that is newer than the one the theme extends, it opens a pull request that takes
+the release into the starter files you kept, the same day the files you don't keep switch to
+it: files you never changed become the release's, and
 your changes are merged with the release's. A file where you and the release changed the
 same lines is left as it is and listed in the pull request, for you to update by hand.
 
 For it to open pull requests, turn on **Settings → Actions → General → Allow GitHub Actions
 to create and approve pull requests**. Close and reopen its pull request to run the check
-on it.
+on it. GitHub pauses scheduled workflows in a public repository after 60 days without
+activity; re-enable it from the **Actions** tab.
 
 Novinzo announces breaking changes to the variables templates can read ahead of time, and
 flags themes that use them on the dashboard's Theme page.

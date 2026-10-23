@@ -1,13 +1,13 @@
 name: Starter updates
 
-# Every Monday, looks for a newer starter release of the major version theme.json extends
-# and opens a pull request taking it into the copies of the starter's files this theme
-# keeps; the files it does not keep follow the starter on their own. Turn on
-# Settings → Actions → General → "Allow GitHub Actions to create and approve pull
-# requests" first. Run it from the Actions tab to look at once.
+# Once a day, looks for a newer starter release of the major version theme.json extends,
+# up to the one Novinzo serves, and opens a pull request taking it into the copies of the
+# starter's files this theme keeps; the files it does not keep follow the starter on their
+# own. Turn on Settings → Actions → General → "Allow GitHub Actions to create and approve
+# pull requests" first. Run it from the Actions tab to look at once.
 on:
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
