@@ -1,0 +1,44 @@
+name: Starter updates
+
+# Every Monday, looks for a newer starter release of the major version theme.json extends
+# and opens a pull request taking it into the copies of the starter's files this theme
+# keeps; the files it does not keep follow the starter on their own. Turn on
+# Settings → Actions → General → "Allow GitHub Actions to create and approve pull
+# requests" first. Run it from the Actions tab to look at once.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    # The template itself is the starter; repositories made from it take in its releases.
+    if: github.repository != 'emergente-labs/novinzo-theme-starter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - id: update
+        uses: emergente-labs/novinzo-theme-deploy@v1
+        with:
+          mode: update
+      - if: steps.update.outputs.version != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.update.outputs.version }}
+          SUMMARY: ${{ steps.update.outputs.summary }}
+        run: |
+          branch="novinzo/starter-$VERSION"
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            echo "A pull request for starter $VERSION is already open."
+            exit 0
+          fi
+          git switch --create "$branch"
+          git -c user.name="github-actions[bot]" \
+            -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit --all --message "Take in starter $VERSION"
+          git push origin "$branch"
+          gh pr create --head "$branch" --title "Take in starter $VERSION" --body "$SUMMARY"
