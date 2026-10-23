@@ -57,9 +57,11 @@ Inherited pages use your stylesheet. The deploy writes the starter's Liquid to
 Once a day, `.github/workflows/starter-updates.yml` asks Novinzo which starter release it
 serves. When that is newer than the one the theme extends, it opens a pull request that takes
 the release into the starter files you kept, the same day the files you don't keep switch to
-it: files you never changed become the release's, and
-your changes are merged with the release's. A file where you and the release changed the
-same lines is left as it is and listed in the pull request, for you to update by hand.
+it: files you never changed become the release's (or go, when the release drops them), and
+your changes are merged with the release's. Where you and the release changed the same
+lines, the file gets git's conflict markers and the pull request lists it first: resolve
+them before merging, as the deploy refuses a theme that still has them. A newer pull request
+closes an older one it supersedes.
 
 For it to open pull requests, turn on **Settings → Actions → General → Allow GitHub Actions
 to create and approve pull requests**. Close and reopen its pull request to run the check

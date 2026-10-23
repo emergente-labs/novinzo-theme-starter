@@ -4,7 +4,7 @@
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
   "version": "1.1.0",
-  "changelog": "A theme made from the starter extends it: it can drop the files it does not change, and a weekly workflow proposes newer starter releases",
+  "changelog": "A theme made from the starter extends it: it can drop the files it does not change, and a daily workflow proposes newer starter releases",
   "status": "published",
   "extends": "starter@1.1.0"
 }
