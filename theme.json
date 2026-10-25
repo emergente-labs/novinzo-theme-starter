@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.1.0",
-  "changelog": "A theme made from the starter extends it: it can drop the files it does not change, and a daily workflow proposes newer starter releases",
+  "version": "1.1.1",
+  "changelog": "npm run check runs the theme CLI by its published name, @emergente-labs/theme-cli",
   "status": "published",
-  "extends": "starter@1.1.0"
+  "extends": "starter@1.1.1"
 }
