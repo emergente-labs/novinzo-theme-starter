@@ -1,0 +1,48 @@
+name: Starter release check
+
+# Every change theme repositories take in has to come with a new starter version, which
+# starter-release.yml tags when it reaches main: themes only take in tagged releases, so a
+# change left under a version already tagged would never reach them. Only the files no
+# theme takes in (the README, licenses and workflows) may change without one. A new version
+# must be newer than every release, and theme.json must extend it, as a repository made from
+# the template then does.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    # Repositories made from the template copy this workflow; only the starter releases.
+    if: github.repository == 'emergente-labs/novinzo-theme-starter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: |
+          set -euo pipefail
+          version=$(jq -r .version theme.json)
+          extends=$(jq -r .extends theme.json)
+          latest=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          if git rev-parse --quiet --verify "refs/tags/v$version" >/dev/null; then
+            changed=$(git diff --name-only "v$version" HEAD | grep -Ev '^(README\.md|LICENSE|OFL\.txt|\.github/.*)$' || true)
+            if [ -n "$changed" ]; then
+              echo "$changed" | while read -r file; do
+                echo "::error file=$file::Starter $version is released already, and theme repositories take in only new releases. Raise \"version\" in theme.json (and \"extends\" with it) for this change to reach them."
+              done
+              exit 1
+            fi
+            echo "Changes nothing theme repositories take in; starter $version stays as it is."
+            exit 0
+          fi
+          if [ "$(printf '%s\n%s\n' "${latest#v}" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+            echo "::error file=theme.json::Starter $version would not be newer than the latest release, ${latest#v}."
+            exit 1
+          fi
+          if [ "$extends" != "starter@$version" ]; then
+            echo "::error file=theme.json::theme.json extends \"$extends\"; a repository made from the template has to extend the release it is made from, \"starter@$version\"."
+            exit 1
+          fi
+          echo "Releases starter $version when merged."
