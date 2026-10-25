@@ -30,8 +30,8 @@ You need Node.js 22 or later. Run `npm install` once.
 - `theme.json` names the theme and the starter release it `extends` (see below).
 
 To preview the theme on your store as you edit it, without deploying, run
-`npx @novinzo/theme-cli dev`. `npm run check` has Novinzo check the theme the way a deploy
-does, and changes nothing on your store. Pull requests run the same check, as
+`npx @emergente-labs/theme-cli dev`. `npm run check` has Novinzo check the theme the way a
+deploy does, and changes nothing on your store. Pull requests run the same check, as
 `.github/workflows/check.yml`.
 
 ## Roll back
