@@ -4,6 +4,8 @@ name: Check theme
 # problems show as annotations before the change reaches main. It needs what the deploy
 # needs: the NOVINZO_STORE repository variable, and this repository approved on the store's
 # Settings → Theme. GitHub gives pull requests from forks no OIDC token, so they are skipped.
+# The steps live in the action's repository, so they change with its releases and this file
+# never has to.
 on:
   pull_request:
 
@@ -13,14 +15,6 @@ permissions:
 
 jobs:
   check:
-    # The template itself checks against no store; repositories made from it do.
-    if: >-
-      github.repository != 'emergente-labs/novinzo-theme-starter' &&
-      github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: emergente-labs/novinzo-theme-deploy@v1
-        with:
-          store: ${{ vars.NOVINZO_STORE }}
-          mode: check
+    uses: emergente-labs/novinzo-theme-deploy/.github/workflows/check.yml@v1
+    with:
+      store: ${{ vars.NOVINZO_STORE }}
