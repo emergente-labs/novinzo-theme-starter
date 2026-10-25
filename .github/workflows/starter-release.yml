@@ -1,0 +1,37 @@
+name: Starter release
+
+# Releases the starter: when main's theme.json names a version that has no v<version> tag
+# yet, tags main with it. Theme repositories take in releases from these tags, and the
+# Novinzo monorepo pins its starter to them. Then moves the release branch, which the
+# monorepo's submodule tracks, to the newest release, so its bumps are always releases.
+# starter-release-check.yml makes every change themes take in come with a new version.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # Repositories made from the template copy this workflow; only the starter releases.
+    if: github.repository == 'emergente-labs/novinzo-theme-starter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: |
+          set -euo pipefail
+          version=$(jq -r .version theme.json)
+          if git rev-parse --quiet --verify "refs/tags/v$version" >/dev/null; then
+            echo "Starter $version is released already."
+          else
+            git tag "v$version" HEAD
+            git push origin "refs/tags/v$version"
+            echo "::notice::Released starter $version."
+          fi
+          latest=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          # Not forced: a release that does not descend from the last one fails here.
+          git push origin "$latest^{commit}:refs/heads/release"
