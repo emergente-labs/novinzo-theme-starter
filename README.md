@@ -20,7 +20,7 @@ with Tailwind CSS, deployed to your store by GitHub Actions on every push to `ma
 
 ## Work on the theme
 
-You need Node.js 22 or later. Run `npm install` once.
+You need Node.js 20 or later, as the theme CLI does. Run `npm install` once.
 
 - `layouts/`, `templates/`, `sections/` and `snippets/` are the theme's Liquid.
 - `assets/input.css` is the Tailwind source; `npm run build` compiles it into

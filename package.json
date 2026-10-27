@@ -4,7 +4,7 @@
   "description": "A Novinzo storefront theme, deployed by GitHub Actions on every push.",
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
   },
   "scripts": {
     "build": "tailwindcss -i assets/input.css -o assets/theme.css --minify",
