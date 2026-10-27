@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.1.1",
-  "changelog": "npm run check runs the theme CLI by its published name, @emergente-labs/theme-cli",
+  "version": "1.2.0",
+  "changelog": "The order page offers Contact seller when the store has a support email",
   "status": "published",
-  "extends": "starter@1.1.1"
+  "extends": "starter@1.2.0"
 }
