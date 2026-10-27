@@ -4,6 +4,7 @@
   order-id="{{ order.orderId }}"
   store-name="{{ store.name }}"
   store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  {% if store.supportEmail %}support-email="{{ store.supportEmail }}"{% endif %}
   data-island="nz-order-detail"
   data-hydrate="eager"
 ></nz-order-detail>
