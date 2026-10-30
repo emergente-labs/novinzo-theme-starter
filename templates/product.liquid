@@ -1,5 +1,15 @@
 {% layout 'default' %}
 
+<!--
+  A product whose variants are an event's ticket tiers is that event's page: the ticketing
+  plugin's block shows the event and a button per tier, from the answer read here. Without
+  the plugin, or for any other product, `nz_ticket_event` is null or empty and the page is the
+  product page below.
+-->
+{% plugin "ticketing.event", productId: product.id as nz_ticket_event %}
+{% if nz_ticket_event.events.size > 0 %}
+  {% plugin_block "ticketing/event-page@1", ticket_event: nz_ticket_event, product_id: product.id %}
+{% else %}
 <div class="flex flex-col gap-10 lg:gap-16">
   <section>
     <h1 class="text-base lg:text-xl font-semibold">
@@ -91,9 +101,6 @@
         </fieldset>
       {% endif %}
 
-      <!-- Ticket releases: renders nothing unless the ticketing plugin sells these variants -->
-      {% plugin_block "ticketing/ticket-releases@1", product_id: product.id %}
-
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <button
           type="button"
@@ -125,3 +132,4 @@
   {%- comment -%} Published reviews, when the store has the reviews plugin: average rating, breakdown and the newest reviews. {%- endcomment %}
   {% plugin_block "reviews/product-reviews@1", product_id: product.id %}
 </div>
+{% endif %}
