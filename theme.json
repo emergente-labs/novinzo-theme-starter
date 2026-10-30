@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.2.0",
-  "changelog": "Products with options, such as Size and Colour, offer one choice per option instead of one chip per variant, and show the chosen combination's price and stock",
+  "version": "1.3.0",
+  "changelog": "The order page offers swaps and returns of shipped items when the store takes them",
   "status": "published",
-  "extends": "starter@1.2.0"
+  "extends": "starter@1.3.0"
 }
