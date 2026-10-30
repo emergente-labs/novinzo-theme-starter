@@ -10,3 +10,6 @@
 
 {%- comment -%} Review forms for the order's lines, when the store has the reviews plugin; nothing until the order is paid. {%- endcomment %}
 {% plugin_block "reviews/order-reviews@1", order_id: order.orderId %}
+
+{%- comment -%} Swaps and returns of the order's shipped items, when the store has the physical goods plugin and takes them. {%- endcomment %}
+{% plugin_block "physical-goods/order-returns@1", order_id: order.orderId %}
