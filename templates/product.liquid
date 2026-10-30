@@ -57,8 +57,50 @@
         {% endif %}
       </div>
 
+      {%- comment -%}
+        A product with options (Size, Colour…) offers one choice per option.
+        The variant chips below stay in the page, hidden, as the selection the
+        cart reads: the storefront script checks the chip whose
+        `data-variant-options-key` matches the chosen values. The first
+        variant's values start checked, as its chip does.
+      {%- endcomment -%}
+      {% if product.options.size > 0 %}
+        {% assign first_variant = product.variants.first %}
+        {% for option in product.options %}
+          {% assign option_index = forloop.index0 %}
+          <fieldset data-option-name="{{ option.name }}">
+            <legend class="mb-3 text-sm font-medium text-white">{{ option.name }}</legend>
+            <div class="flex flex-wrap gap-3">
+              {% for value in option.values %}
+                <label class="cursor-pointer rounded-2xl ring-3 px-5 py-3 transition-all duration-200 ring-white/0 bg-black/20 hover:ring-white/50 has-checked:ring-blue-500 has-checked:bg-transparent has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white">
+                  <input
+                    type="radio"
+                    class="sr-only"
+                    name="option-{{ product.id }}-{{ option_index }}"
+                    value="{{ value }}"
+                    {% for chosen in first_variant.options %}{% if forloop.index0 == option_index and chosen.value == value %}checked{% endif %}{% endfor %}
+                  >
+                  <span class="text-sm font-medium text-white/90">{{ value }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
+        {%- comment -%}
+          The hidden chips carry each variant's price and stock note, so the
+          storefront script repeats the chosen variant's here: its price, its
+          `data-availability` (which shows the matching stock note), or that
+          the chosen values name no variant. It starts at the first variant.
+        {%- endcomment -%}
+        <div data-chosen-variant aria-live="polite" class="-mt-8 text-sm">
+          <span data-chosen-variant-price class="text-price font-mono">{{ first_variant.unitPrice | money }}</span>
+          {% render 'variant-availability' %}
+          <span data-chosen-variant-unmatched hidden class="text-xs text-red-400">Not available in this combination</span>
+        </div>
+      {% endif %}
+
       {% if product.variants.size > 0 %}
-        <fieldset>
+        <fieldset {% if product.options.size > 0 %}hidden{% endif %}>
           <legend class="mb-3 text-sm font-medium text-white">Variants <span class="opacity-50" aria-hidden="true">&#x2198;</span></legend>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {%- comment -%}
@@ -76,6 +118,8 @@
                 data-variant-id="{{ variant.id }}"
                 data-variant-name="{{ variant.name }}"
                 data-price-minor-units="{{ variant.unitPrice | money_minor_units }}"
+                data-variant-price="{{ variant.unitPrice | money }}"
+                data-variant-options-key="{{ variant.optionsKey }}"
               >
                 <input type="radio" class="sr-only" name="variant-{{ product.id }}" value="{{ variant.id }}" {% if forloop.first %}checked{% endif %}>
                 <span class="block text-sm font-medium text-white/90">{{ variant.name }}</span>
