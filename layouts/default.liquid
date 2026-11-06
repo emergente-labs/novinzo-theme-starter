@@ -19,8 +19,23 @@
     <meta property="og:title" content="{{ page_title }}">
     <meta property="og:description" content="{{ page_description }}">
     <meta property="og:type" content="{% if product %}product{% else %}website{% endif %}">
+    {%- comment -%}
+      The card a link unfurls into, in Discord, Slack or X: a product page shows the product's
+      first image large, any other page the store's logo as a thumbnail. Both URLs are absolute,
+      which link previews require. Previews draw no SVG, so an SVG logo is left out.
+      `theme-color` tints Discord's card with the canvas colour (`--color-canvas`).
+    {%- endcomment %}
+    <meta name="theme-color" content="#101010">
     {%- if product.images.size > 0 %}
     <meta property="og:image" content="{{ product.images.first.url }}">
+    <meta property="og:image:alt" content="{{ product.images.first.altText | default: product.name }}">
+    <meta name="twitter:card" content="summary_large_image">
+    {%- elsif store.logoImageUrl %}
+      {%- unless store.logoImageUrl contains '.svg' %}
+    <meta property="og:image" content="{{ store.logoImageUrl }}">
+    <meta property="og:image:alt" content="{{ store.name }}">
+    <meta name="twitter:card" content="summary">
+      {%- endunless %}
     {%- endif %}
     {%- if product.variants.size > 0 %}
     {%- comment -%}
