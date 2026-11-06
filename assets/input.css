@@ -70,7 +70,7 @@
  */
 @theme {
   --color-surface: #090909; /* the page surface the content scrolls on */
-  --color-canvas: #101010; /* the frame around that surface, and the "Powered by" notch */
+  --color-canvas: #101010; /* the frame around that surface, and the "Powered by" notch; layouts/default.liquid repeats it as theme-color */
   --color-panel: #111111; /* the footer's store panel */
   --color-card: #161616; /* product cards, the product info card and the category filter */
   --color-well: #1f1f1f; /* behind product images */
