@@ -22,6 +22,41 @@
     {%- if product.images.size > 0 %}
     <meta property="og:image" content="{{ product.images.first.url }}">
     {%- endif %}
+    {%- if product.variants.size > 0 %}
+    {%- comment -%}
+      The product as schema.org data, which search engines show as a rich result: its name, its
+      own description (its SEO one, else its text without Markdown), its images and one Offer
+      per variant, priced as a plain decimal in the price's currency. A product with no variant
+      has no Offer, which a rich result needs, so it gets none. The page is cached and stock is
+      live, so no Offer claims an availability. `json | raw` escapes `<`, so seller text cannot
+      close the script element.
+    {%- endcomment %}
+    {%- assign product_description = product.description | markdown | strip_html | strip | default: product.name %}
+    {%- if product.seo.description != blank %}
+      {%- assign product_description = product.seo.description %}
+    {%- endif %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": {{ product.name | json | raw }},
+        "description": {{ product_description | json | raw }},
+        {%- if product.images.size > 0 %}
+        "image": {{ product.images | map: "url" | json | raw }},
+        {%- endif %}
+        "offers": [
+          {%- for variant in product.variants %}
+          {
+            "@type": "Offer",
+            "name": {{ variant.name | json | raw }},
+            "price": {{ variant.unitPrice | money_amount | json | raw }},
+            "priceCurrency": {{ variant.unitPrice.currency | json | raw }}
+          }{% unless forloop.last %},{% endunless %}
+          {%- endfor %}
+        ]
+      }
+    </script>
+    {%- endif %}
     {%- comment -%}
       The `.page-bg` aurora (bg.webp) is the LCP element, but only theme.css references it, so
       the browser would find it after the stylesheet loads. Preload it and Inter with the same

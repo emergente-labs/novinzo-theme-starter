@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.1.2",
-  "changelog": "Needs Node.js 20 or later, as the theme CLI does, instead of 22",
+  "version": "1.2.0",
+  "changelog": "Product pages describe the product to search engines as schema.org data: its name, description, images and each variant's price",
   "status": "published",
-  "extends": "starter@1.1.2"
+  "extends": "starter@1.2.0"
 }
