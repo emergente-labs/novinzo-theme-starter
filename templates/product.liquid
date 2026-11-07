@@ -87,6 +87,9 @@
         </fieldset>
       {% endif %}
 
+      {%- comment -%} The store's volume discounts on this product, when it has the coupons plugin: what buying more of it takes off, next to where the buyer decides how many. {%- endcomment %}
+      {% plugin_block "coupons/volume-tiers@1", product_id: product.id %}
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <button
           type="button"
