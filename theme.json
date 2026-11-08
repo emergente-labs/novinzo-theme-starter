@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.3.0",
-  "changelog": "Links to the store unfurl in Discord, Slack and X with the product's image, or the store's logo, in the theme's colour",
+  "version": "1.4.0",
+  "changelog": "Product pages offer the store's volume pricing, when it has the coupons plugin, as quantities to pick that Add to Cart and Buy Now add",
   "status": "published",
-  "extends": "starter@1.3.0"
+  "extends": "starter@1.4.0"
 }
