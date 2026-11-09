@@ -1,0 +1,9 @@
+{% layout 'novinzo' %}
+
+<nz-subscription-detail
+  subscription-id="{{ subscription.subscriptionId }}"
+  store-name="{{ store.name }}"
+  store-logo-url="{% if store.logoImageUrl %}{{ store.logoImageUrl | image_url: width: 64 }}{% endif %}"
+  data-island="nz-subscription-detail"
+  data-hydrate="eager"
+></nz-subscription-detail>
