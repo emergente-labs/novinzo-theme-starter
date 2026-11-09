@@ -79,7 +79,10 @@
               >
                 <input type="radio" class="sr-only" name="variant-{{ product.id }}" value="{{ variant.id }}" {% if forloop.first %}checked{% endif %}>
                 <span class="block text-sm font-medium text-white/90">{{ variant.name }}</span>
-                <span class="block text-xs text-price font-mono mt-0.5">{{ variant.unitPrice | money }}</span>
+                <span class="block text-xs text-price font-mono mt-0.5">
+                  {{- variant.unitPrice | money -}}
+                  {%- if variant.recurrence %} <span class="font-sans text-white/50">{{ variant.recurrence.priceSuffix }}</span>{% endif -%}
+                </span>
                 {% render 'variant-availability' %}
               </label>
             {% endfor %}
