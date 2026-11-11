@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.4.1",
-  "changelog": "The header account icon takes a signed-in buyer to their orders",
+  "version": "1.4.2",
+  "changelog": "The header cart button shows how many items the cart holds",
   "status": "published",
-  "extends": "starter@1.4.1"
+  "extends": "starter@1.4.2"
 }
