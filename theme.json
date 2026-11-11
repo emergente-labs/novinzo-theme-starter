@@ -3,8 +3,8 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.4.0",
-  "changelog": "Subscriptions pages where buyers see their subscriptions and pay or cancel one, and recurring variants show how often they renew",
+  "version": "1.4.1",
+  "changelog": "The header account icon takes a signed-in buyer to their orders",
   "status": "published",
-  "extends": "starter@1.4.0"
+  "extends": "starter@1.4.1"
 }
