@@ -23,8 +23,12 @@
     >
       <img src="{{ 'cart.svg' | asset_url }}" alt="" width="16" height="16">
     </button>
+    {%- comment -%}
+      The page is cached for every visitor, so the link cannot depend on who is signed in. The
+      orders page is the account: it sends a buyer who is not signed in to sign in, and back.
+    {%- endcomment %}
     <a
-      href="/login"
+      href="/orders"
       aria-label="Account"
       class="flex items-center justify-center size-9 rounded-xl bg-black/7.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
     >
