@@ -3,8 +3,44 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.4.3",
-  "changelog": "The checkout page asks the questions of the Checkout questions app",
+  "version": "1.5.0",
+  "changelog": "Theme settings: the accent colour, the home page's heading and text, and switches for its customer count and category filter",
   "status": "published",
-  "extends": "starter@1.4.3"
+  "extends": "starter@1.5.0",
+  "settings": [
+    {
+      "id": "accent_color",
+      "type": "color",
+      "label": "Accent colour",
+      "default": "#d4f264"
+    },
+    {
+      "id": "hero_heading",
+      "type": "text",
+      "label": "Heading",
+      "group": "Home page",
+      "default": ""
+    },
+    {
+      "id": "hero_text",
+      "type": "textarea",
+      "label": "Text under the heading",
+      "group": "Home page",
+      "default": "Browse our full catalog."
+    },
+    {
+      "id": "show_customer_count",
+      "type": "boolean",
+      "label": "Show the customer count",
+      "group": "Home page",
+      "default": true
+    },
+    {
+      "id": "show_category_filter",
+      "type": "boolean",
+      "label": "Show the category filter",
+      "group": "Home page",
+      "default": true
+    }
+  ]
 }

@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="en">
+{%- comment -%}
+  The accent colour the store's owner picked in the dashboard (theme.json's `accent_color`
+  setting) replaces the stylesheet's `--color-price`, so prices and every `text-price` follow it.
+{%- endcomment %}
+<html lang="en" style="--color-price: {{ settings.accent_color }}">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

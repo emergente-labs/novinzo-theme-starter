@@ -27,12 +27,34 @@ You need Node.js 20 or later, as the theme CLI does. Run `npm install` once.
   `assets/theme.css`, which the layout loads. `npm run watch` rebuilds as you edit.
 - Other files in `assets/` (images, fonts, scripts) are served from your store at
   `/theme/assets/…`; use the `asset_url` filter to link them.
-- `theme.json` names the theme and the starter release it `extends` (see below).
+- `theme.json` names the theme, the starter release it `extends` and its settings (see below).
 
 To preview the theme on your store as you edit it, without deploying, run
 `npx @emergente-labs/theme-cli dev`. `npm run check` has Novinzo check the theme the way a
 deploy does, and changes nothing on your store. Pull requests run the same check, as
 `.github/workflows/check.yml`.
+
+## Settings
+
+`theme.json` lists the theme's `settings`: what your store's owner can change in the
+dashboard, under **Settings → Theme → Theme settings**, without touching the code. Each one
+has an `id`, a `type`, a `label` and a `default`, and optionally the `group` it is shown
+under:
+
+```json
+{ "id": "accent_color", "type": "color", "label": "Accent colour", "default": "#d4f264" }
+```
+
+A `type` is `text`, `textarea`, `color` (a hex colour), `boolean`, `select` (with its
+`options`, each a `value` and a `label`) or `image` (which has no default). Templates read a
+setting as `settings.<id>`: `{{ settings.accent_color }}`, `{% if settings.show_category_filter %}`.
+Every setting always has a value there, the owner's or its default; an image nobody uploaded
+is `nil`, and one that was is its URL.
+
+The starter declares its accent colour, the home page's heading and text, and switches for
+the customer count and the category filter. A theme that extends the starter has the
+starter's settings too, so the pages it inherits keep reading them; declare one of the same
+`id` to replace it. Removing a setting is safe: its saved value is ignored.
 
 ## Roll back
 
