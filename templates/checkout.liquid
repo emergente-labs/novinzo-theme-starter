@@ -5,4 +5,11 @@
   currency="{{ store.currencyIsoCode }}"
   data-island="nz-checkout-form"
   data-hydrate="eager"
-></nz-checkout-form>
+>
+  {% comment %}
+    The questions the cart's products ask the buyer, from the Checkout questions app. Written
+    inside the form, they show in its card among its own fields. It renders nothing for a store
+    without the app, and for a cart that asks nothing.
+  {% endcomment %}
+  {% plugin_block "checkout-questions/checkout-questions@1" %}
+</nz-checkout-form>
