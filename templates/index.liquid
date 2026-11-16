@@ -10,12 +10,19 @@
 <section class="mb-0 lg:mb-10">
   <div class="relative max-w-3xl">
     <h1 class="text-3xl lg:text-6xl font-bold leading-tight mb-5">
-      {%- comment -%} A new store has no headline yet: greet buyers with its name, never a bare "Welcome to". {%- endcomment -%}
+      {%- comment -%}
+        The heading is the theme's `hero_heading` setting; left empty, it is the store's headline.
+        A new store has no headline yet: greet buyers with its name, never a bare "Welcome to".
+      {%- endcomment -%}
       {%- assign default_headline = 'Welcome to ' | append: store.name -%}
-      <span class="block text-white font-normal">{{ store.headline | default: default_headline }}</span>
+      {%- assign store_headline = store.headline | default: default_headline -%}
+      <span class="block text-white font-normal">{{ settings.hero_heading | default: store_headline }}</span>
     </h1>
-    <p class="text-sm lg:text-base text-white/45 mb-7">Browse our full catalog.</p>
-    {% if store.customerCount > 50 %}
+    {%- comment -%} An owner who empties the text gets no paragraph, not an empty one. {%- endcomment %}
+    {% if settings.hero_text != blank %}
+      <p class="text-sm lg:text-base text-white/45 mb-7">{{ settings.hero_text }}</p>
+    {% endif %}
+    {% if settings.show_customer_count and store.customerCount > 50 %}
       <div class="px-2.5 py-1.5 flex items-center gap-1.5 text-sm rounded-xl bg-black/7.5 text-white/70 w-fit">
         <img src="{{ 'check.svg' | asset_url }}" alt="" height="16" width="16">
         Trusted by {{ store.customerCount }}+ Customers
@@ -27,20 +34,22 @@
 <section class="flex flex-col gap-16">
   <div class="flex flex-col gap-5 min-[580px]:flex-row min-[580px]:items-center min-[580px]:justify-between">
     <h2 class="text-base lg:text-xl font-semibold">All Products <span class="opacity-50" aria-hidden="true">&#x2198;</span></h2>
-    {%- comment -%}
-      A native select is as wide as its longest option, so one long category name would push
-      the form, and the page with it, past a phone's width. The form stops at its container,
-      and the dropdown block shrinks inside it, cutting the shown name with an ellipsis.
-    {%- endcomment %}
-    <form
-      method="get"
-      action="/"
-      class="flex min-h-10 w-fit max-w-full min-w-0 items-center rounded-2xl bg-card px-4 py-2 text-sm focus-within:ring-1 focus-within:ring-white/20 [&_nz-categories-dropdown]:min-w-0 [&_select]:max-w-full [&_select]:text-ellipsis"
-    >
-      <label for="category" class="shrink-0 text-white/35">Category:</label>
-      {% plugin_block "categories/category-dropdown@1", placeholder: "All categories", selected: selected_category_slug %}
-      <noscript><button type="submit" class="ml-2 text-price">Apply</button></noscript>
-    </form>
+    {% if settings.show_category_filter %}
+      {%- comment -%}
+        A native select is as wide as its longest option, so one long category name would push
+        the form, and the page with it, past a phone's width. The form stops at its container,
+        and the dropdown block shrinks inside it, cutting the shown name with an ellipsis.
+      {%- endcomment %}
+      <form
+        method="get"
+        action="/"
+        class="flex min-h-10 w-fit max-w-full min-w-0 items-center rounded-2xl bg-card px-4 py-2 text-sm focus-within:ring-1 focus-within:ring-white/20 [&_nz-categories-dropdown]:min-w-0 [&_select]:max-w-full [&_select]:text-ellipsis"
+      >
+        <label for="category" class="shrink-0 text-white/35">Category:</label>
+        {% plugin_block "categories/category-dropdown@1", placeholder: "All categories", selected: selected_category_slug %}
+        <noscript><button type="submit" class="ml-2 text-price">Apply</button></noscript>
+      </form>
+    {% endif %}
   </div>
 
   {%- comment -%}

@@ -74,7 +74,7 @@
   --color-panel: #111111; /* the footer's store panel */
   --color-card: #161616; /* product cards, the product info card and the category filter */
   --color-well: #1f1f1f; /* behind product images */
-  --color-price: #d4f264;
+  --color-price: #d4f264; /* prices and accents; layouts/default.liquid sets it to the `accent_color` setting, whose default in theme.json repeats this */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
