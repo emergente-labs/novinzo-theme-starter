@@ -4,7 +4,7 @@
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
   "version": "1.5.1",
-  "changelog": "The page title, description, link preview and product data move to snippets/seo-head.liquid, which a layout renders",
+  "changelog": "The page title, description, link preview and product data move to snippets/seo-head.liquid, which a layout renders; the product placeholder's box is named media-placeholder",
   "status": "published",
   "extends": "starter@1.5.1",
   "settings": [
