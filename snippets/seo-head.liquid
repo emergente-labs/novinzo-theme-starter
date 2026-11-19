@@ -1,0 +1,72 @@
+{%- comment -%}
+  What search engines and link previews read of a page: its title and description, the card a
+  link unfurls into, and a product's schema.org data. A layout renders it inside its
+  `<head>`, so every layout of a theme, and every theme built on this one, says the same.
+{%- endcomment -%}
+{%- comment -%}
+  The seller's SEO fields from the dashboard: the store's on every page, a product's own
+  on its page. An empty one falls back to the product or store name.
+{%- endcomment -%}
+{%- assign page_title = store.seoTitle | default: store.name -%}
+{%- assign page_description = store.seoDescription | default: store.name -%}
+{%- if product -%}
+  {%- assign page_title = product.seo.title | default: product.name -%}
+  {%- assign page_description = product.seo.description | default: page_description -%}
+{%- endif %}
+<meta name="description" content="{{ page_description }}">
+<title>{{ page_title }}</title>
+<meta property="og:site_name" content="{{ store.name }}">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description }}">
+<meta property="og:type" content="{% if product %}product{% else %}website{% endif %}">
+{%- comment -%}
+  The card a link unfurls into, in Discord, Slack or X: a product page shows the product's
+  first image large, any other page the store's logo as a thumbnail. Both URLs are absolute,
+  which link previews require. Previews draw no SVG, so an SVG logo is left out.
+{%- endcomment %}
+{%- if product.images.size > 0 %}
+<meta property="og:image" content="{{ product.images.first.url }}">
+<meta property="og:image:alt" content="{{ product.images.first.altText | default: product.name }}">
+<meta name="twitter:card" content="summary_large_image">
+{%- elsif store.logoImageUrl %}
+  {%- unless store.logoImageUrl contains '.svg' %}
+<meta property="og:image" content="{{ store.logoImageUrl }}">
+<meta property="og:image:alt" content="{{ store.name }}">
+<meta name="twitter:card" content="summary">
+  {%- endunless %}
+{%- endif %}
+{%- if product.variants.size > 0 %}
+{%- comment -%}
+  The product as schema.org data, which search engines show as a rich result: its name, its
+  own description (its SEO one, else its text without Markdown), its images and one Offer
+  per variant, priced as a plain decimal in the price's currency. A product with no variant
+  has no Offer, which a rich result needs, so it gets none. The page is cached and stock is
+  live, so no Offer claims an availability. `json | raw` escapes `<`, so seller text cannot
+  close the script element.
+{%- endcomment %}
+{%- assign product_description = product.description | markdown | strip_html | strip | default: product.name %}
+{%- if product.seo.description != blank %}
+  {%- assign product_description = product.seo.description %}
+{%- endif %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.name | json | raw }},
+    "description": {{ product_description | json | raw }},
+    {%- if product.images.size > 0 %}
+    "image": {{ product.images | map: "url" | json | raw }},
+    {%- endif %}
+    "offers": [
+      {%- for variant in product.variants %}
+      {
+        "@type": "Offer",
+        "name": {{ variant.name | json | raw }},
+        "price": {{ variant.unitPrice | money_amount | json | raw }},
+        "priceCurrency": {{ variant.unitPrice.currency | json | raw }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+</script>
+{%- endif %}

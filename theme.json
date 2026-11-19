@@ -3,10 +3,10 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.5.0",
-  "changelog": "Theme settings: the accent colour, the home page's heading and text, and switches for its customer count and category filter",
+  "version": "1.5.1",
+  "changelog": "The page title, description, link preview and product data move to snippets/seo-head.liquid, which a layout renders; the product placeholder's box is named media-placeholder",
   "status": "published",
-  "extends": "starter@1.5.0",
+  "extends": "starter@1.5.1",
   "settings": [
     {
       "id": "accent_color",
