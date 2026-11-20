@@ -25,10 +25,16 @@
   </head>
   <body class="h-screen overflow-hidden antialiased p-2 bg-canvas">
     <div class="page-bg bg-surface rounded-2xl h-full overflow-y-auto overscroll-none">
+      {%- comment -%}
+        The mark links Novinzo's site: a plain link a search engine follows, to the bare address,
+        named by the mark's `alt` alone. It opens a new tab, so the store stays open in this one.
+      {%- endcomment %}
       <div class="flex justify-center sticky top-0 z-20">
         <span class="notch inline-flex items-center gap-1.5 px-5 pb-2 pt-1 text-sm text-white/50">
           Powered by
-          <img src="{{ 'novinzo.svg' | asset_url }}" alt="Novinzo" width="16" height="16">
+          <a href="https://novinzo.com/" target="_blank" rel="noopener">
+            <img src="{{ 'novinzo.svg' | asset_url }}" alt="Novinzo" width="16" height="16">
+          </a>
         </span>
       </div>
       <div class="container px-5 lg:px-8 flex flex-col gap-20 lg:gap-40 mx-auto">
