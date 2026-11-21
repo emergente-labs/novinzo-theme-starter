@@ -3,10 +3,10 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.5.2",
-  "changelog": "The Novinzo mark in the Powered by notch and in the footer links novinzo.com",
+  "version": "1.5.3",
+  "changelog": "The order page offers Connect Discord when the store has the Discord app",
   "status": "published",
-  "extends": "starter@1.5.2",
+  "extends": "starter@1.5.3",
   "settings": [
     {
       "id": "accent_color",
