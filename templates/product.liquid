@@ -76,6 +76,9 @@
                 data-variant-id="{{ variant.id }}"
                 data-variant-name="{{ variant.name }}"
                 data-price-minor-units="{{ variant.unitPrice | money_minor_units }}"
+                data-min-quantity="{{ variant.minQuantity }}"
+                data-max-quantity="{{ variant.maxQuantity }}"
+                data-max-quantity-per-customer="{{ variant.maxQuantityPerCustomer }}"
               >
                 <input type="radio" class="sr-only" name="variant-{{ product.id }}" value="{{ variant.id }}" {% if forloop.first %}checked{% endif %}>
                 <span class="block text-sm font-medium text-white/90">{{ variant.name }}</span>
@@ -84,6 +87,7 @@
                   {%- if variant.recurrence %} <span class="font-sans text-white/50">{{ variant.recurrence.priceSuffix }}</span>{% endif -%}
                 </span>
                 {% render 'variant-availability' %}
+                {% render 'variant-quantity-limits', minQuantity: variant.minQuantity, maxQuantity: variant.maxQuantity, maxQuantityPerCustomer: variant.maxQuantityPerCustomer %}
               </label>
             {% endfor %}
           </div>

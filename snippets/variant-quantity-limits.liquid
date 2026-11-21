@@ -1,0 +1,14 @@
+{%- comment -%}
+  Quantity rules under a variant. Caller passes `minQuantity`, `maxQuantity` and
+  `maxQuantityPerCustomer` from the variant; a bound that is not set (1 for the
+  minimum, null for the others) gets no line.
+{%- endcomment -%}
+{% if minQuantity > 1 %}
+  <p class="text-xs text-white/50 mt-0.5" data-quantity-rule>At least {{ minQuantity }} per order</p>
+{% endif %}
+{% if maxQuantity %}
+  <p class="text-xs text-white/50 mt-0.5" data-quantity-rule>Up to {{ maxQuantity }} per order</p>
+{% endif %}
+{% if maxQuantityPerCustomer %}
+  <p class="text-xs text-white/50 mt-0.5" data-quantity-rule>Limit {{ maxQuantityPerCustomer }} per customer</p>
+{% endif %}
