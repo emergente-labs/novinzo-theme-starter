@@ -9,6 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ store.name }}">
     <title>{{ store.name }}</title>
+    {%- comment -%}
+      The tab icon, as in layouts/default.liquid. Inline, not a snippet: this layout serves the
+      error and checkout pages, which render no snippet of their own.
+    {%- endcomment %}
+    {%- if store.logoImageUrl %}
+    <link rel="icon" href="{{ store.logoImageUrl | image_url: width: 64 }}">
+    {%- else %}
+    <link rel="icon" type="image/svg+xml" href="{{ 'store-icon.svg' | asset_url }}">
+    {%- endif %}
     <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
     {{ content_for_head }}
   </head>
