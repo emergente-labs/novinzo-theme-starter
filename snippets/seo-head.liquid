@@ -5,13 +5,17 @@
 {%- endcomment -%}
 {%- comment -%}
   The seller's SEO fields from the dashboard: the store's on every page, a product's own
-  on its page. An empty one falls back to the product or store name.
+  on its page. An empty title falls back to the product or store name. A product without an
+  SEO description is described by the start of its own text, without Markdown and cut to
+  the 160 characters a search engine shows, so its page does not share the store's
+  description with every other product; a product with no text either takes the store's.
 {%- endcomment -%}
 {%- assign page_title = store.seoTitle | default: store.name -%}
 {%- assign page_description = store.seoDescription | default: store.name -%}
 {%- if product -%}
   {%- assign page_title = product.seo.title | default: product.name -%}
-  {%- assign page_description = product.seo.description | default: page_description -%}
+  {%- assign product_text = product.description | markdown | strip_html | squish | truncate: 160 -%}
+  {%- assign page_description = product.seo.description | default: product_text | default: page_description -%}
 {%- endif %}
 <meta name="description" content="{{ page_description }}">
 <title>{{ page_title }}</title>
