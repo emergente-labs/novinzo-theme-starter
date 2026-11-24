@@ -14,6 +14,17 @@
     {% render 'seo-head' %}
     <meta name="theme-color" content="#101010">
     {%- comment -%}
+      The icon of the page's tab: the store's logo, at twice the size a tab draws it, or for a
+      store without one the ball its pages show in the logo's place (snippets/logo-placeholder.liquid).
+      Without it the browser asks for /favicon.ico, which no store serves, and logs a 404 on
+      every page.
+    {%- endcomment %}
+    {%- if store.logoImageUrl %}
+    <link rel="icon" href="{{ store.logoImageUrl | image_url: width: 64 }}">
+    {%- else %}
+    <link rel="icon" type="image/svg+xml" href="{{ 'store-icon.svg' | asset_url }}">
+    {%- endif %}
+    {%- comment -%}
       The `.page-bg` aurora (bg.webp) is the LCP element, but only theme.css references it, so
       the browser would find it after the stylesheet loads. Preload it and Inter with the same
       URLs theme.css uses so each is fetched once.
