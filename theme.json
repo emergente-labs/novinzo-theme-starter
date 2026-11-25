@@ -3,10 +3,10 @@
   "description": "A clean, minimal starter theme for Novinzo storefronts. Perfect for customization.",
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
-  "version": "1.5.6",
-  "changelog": "The order page offers Connect Discord when the store has the Discord app; the home and product pages name Novinzo as their generator",
+  "version": "1.5.7",
+  "changelog": "The order page offers swaps and returns of shipped items when the store has the physical goods plugin and takes them",
   "status": "published",
-  "extends": "starter@1.5.6",
+  "extends": "starter@1.5.7",
   "settings": [
     {
       "id": "accent_color",
