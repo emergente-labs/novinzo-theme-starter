@@ -4,7 +4,7 @@
   "author": "Novinzo",
   "tags": ["minimal", "starter", "clean"],
   "version": "1.5.6",
-  "changelog": "The order page offers Connect Discord when the store has the Discord app",
+  "changelog": "The order page offers Connect Discord when the store has the Discord app; the home and product pages name Novinzo as their generator",
   "status": "published",
   "extends": "starter@1.5.6",
   "settings": [
